@@ -1,26 +1,38 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+// @ts-ignore
+import Graph from "react-graph-vis";
 
-const App: React.FC = () => {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
+export const App = () => {
+    const graph = {
+        nodes: [
+            {id: 1, label: 'Node 1'},
+            {id: 2, label: 'Node 2'},
+            {id: 3, label: 'Node 3'},
+            {id: 4, label: 'Node 4'},
+            {id: 5, label: 'Node 5'}
+        ],
+        edges: [
+            {from: 1, to: 2},
+            {from: 1, to: 3},
+            {from: 2, to: 4},
+            {from: 2, to: 5}
+        ]
+    };
 
-export default App;
+    const options = {
+        layout: {
+            hierarchical: true
+        },
+        edges: {
+            color: "#000000"
+        }
+    };
+
+    const events = {
+        select: function(event:any) {
+            const { nodes, edges } = event;
+        }
+    }
+
+    return <Graph graph={graph} options={options} events={events}/>
+};
