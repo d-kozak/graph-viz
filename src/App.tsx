@@ -1,38 +1,33 @@
-import React from "react";
+import React, {useState} from "react";
 // @ts-ignore
 import Graph from "react-graph-vis";
+import {graph2vis} from "./graph2vis";
+import {NodeEditForm} from "./NodeEditForm";
+
+const initialNodes = [
+    {id: 0, name: 'x', neighbours: [1]},
+    {id: 1, name: 'y', neighbours: [2]},
+    {id: 2, name: 'z', neighbours: []},
+]
 
 export const App = () => {
-    const graph = {
-        nodes: [
-            {id: 1, label: 'Node 1'},
-            {id: 2, label: 'Node 2'},
-            {id: 3, label: 'Node 3'},
-            {id: 4, label: 'Node 4'},
-            {id: 5, label: 'Node 5'}
-        ],
-        edges: [
-            {from: 1, to: 2},
-            {from: 1, to: 3},
-            {from: 2, to: 4},
-            {from: 2, to: 5}
-        ]
-    };
+    const [nodes, setNodes] = useState(initialNodes)
+    const visGraph = graph2vis(nodes)
 
     const options = {
-        layout: {
-            hierarchical: true
-        },
         edges: {
             color: "#000000"
         }
     };
 
     const events = {
-        select: function(event:any) {
-            const { nodes, edges } = event;
+        select: function (event: any) {
+            const {nodes, edges} = event;
         }
     }
 
-    return <Graph graph={graph} options={options} events={events}/>
+    return <div style={{width: '100%', height: '100%'}}>
+        <NodeEditForm nodes={nodes} setNodes={setNodes}/>
+        <Graph graph={visGraph} options={options} events={events}/>
+    </div>
 };
